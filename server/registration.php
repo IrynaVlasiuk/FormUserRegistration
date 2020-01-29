@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 define('PASSWORD_LENGTH', 6);
 

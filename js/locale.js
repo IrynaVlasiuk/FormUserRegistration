@@ -36,5 +36,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let registrationForm = document.querySelector('.registration-form');
         registrationForm.innerHTML = "";
         document.querySelector('.container').replaceChild(htmlDoc.getElementsByClassName('registration-form')[0], registrationForm);
+        location.reload();
     }
 });
