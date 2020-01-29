@@ -3,47 +3,70 @@
 <body>
 <div class="container">
     <div id="msg-response"></div>
+    <div class="localization-block">
+        <form method="get" name="locale">
+            <select name="localization" id="localization">
+                <option value="en" <?php echo $locale == 'en' ? 'selected': ''; ?> >en</option>
+                <option value="rus" <?php echo $locale == 'rus' ? 'selected': ''; ?>>rus</option>
+                <option value="uk" <?php echo $locale == 'uk' ? 'selected': ''; ?>>uk</option>
+            </select>
+        </form>
+    </div>
     <div class="registration-form">
         <div class="image-block">
             <img src="../images/registration-form-1.jpg">
         </div>
         <form method="post" id="user-registration" name="user-registration">
-            <p class="title">Registration form</p>
-            <div>* fields are required</div>
+            <p class="title"><?php echo $lang['titles']['reg_form']; ?></p>
+            <div><?php echo $lang['info_msg']['required']; ?></div>
             <div class="input-group">
-                <input id="first-name" name="first-name" type="text" placeholder="First Name*" maxlength="50"/>
+                <input id="first-name" name="first-name" type="text" placeholder="<?php echo $lang['placeholder']['first_name'].'*'; ?>" maxlength="50"/>
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
             <div class="err-msg"></div>
             <div class="input-group">
-                <input id="last-name" name="last-name" type="text"  placeholder="Last Name*" maxlength="50" />
+                <input id="last-name" name="last-name" type="text"  placeholder="<?php echo $lang['placeholder']['last_name'].'*'; ?>" maxlength="50" />
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
             <div class="err-msg"></div>
             <div class="input-group">
-                <input id="email" name="email" type="email" placeholder="Email*" maxlength="50"/>
+                <input id="email" name="email" type="email" placeholder="<?php echo $lang['placeholder']['email'].'*'; ?>" maxlength="50"/>
                 <i class="fa fa-envelope" aria-hidden="true"></i>
             </div>
             <div class="err-msg"></div>
             <div class="input-group">
-                <input id="password" name="password" type="password"  placeholder="Password*" maxlength="50"/>
+                <input id="password" name="password" type="password"  placeholder="<?php echo $lang['placeholder']['password'].'*'; ?>" maxlength="50"/>
                 <i class="fa fa-lock" aria-hidden="true"></i>
             </div>
             <div class="err-msg"></div>
             <div class="input-group">
-                <input id="confirm-password" name="confirm-password" type="password" placeholder="Confirm Password*" maxlength="50"/>
+                <input id="confirm-password" name="confirm-password" type="password" placeholder="<?php echo $lang['placeholder']['confirm_password'].'*'; ?>" maxlength="50"/>
                 <i class="fa fa-lock" aria-hidden="true"></i>
             </div>
             <div class="err-msg"></div>
             <div class="input-group">
-                <label for="avatar">Avatar</label>
+                <label for="avatar"><?php echo $lang['label']['avatar']; ?></label>
                 <input id="avatar" name="avatar" type="file" class="custom-file-input"/>
             </div>
             <div class="button-block">
-                <button type="button" class="btn-submit" id="user-registration-btn">Register<i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+                <button type="button" class="btn-submit" id="user-registration-btn"><?php echo $lang['label']['register']; ?><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
             </div>
         </form>
     </div>
 </div>
 
 </body>
+
+<style>
+    .custom-file-input::before {
+        content: '<?php echo $lang["info_msg"]["choose_file"]; ?>';
+    }
+
+    .custom-file-input::after {
+        content: 'bla;
+    }
+</style>
+
+<script>
+    let currentLang = "<?php echo $_SESSION['lang']; ?>";
+</script>

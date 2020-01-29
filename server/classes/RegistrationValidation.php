@@ -8,7 +8,7 @@ class RegistrationValidation extends Validation
     {
         if(empty($value)) {
             $key = ucfirst(str_replace('-', ' ', $key));
-            self::$error = $key.' is empty';
+            self::$error = App::lang()['error']['field'] .$key. App::lang()['error']['empty'];
         }
         return self::$error;
     }
@@ -16,23 +16,23 @@ class RegistrationValidation extends Validation
     private static function checkIfEmail($value)
     {
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-            self::$error = "Invalid email format";
+            self::$error = App::lang()['error']['email-format'];
         }
         return self::$error;
     }
 
-    private static function checkPasswordLength($key, $value)
+    private static function checkPasswordLength($value)
     {
         if(strlen($value) < PASSWORD_LENGTH) {
-            self::$error = ucfirst($key).' is less than '. PASSWORD_LENGTH.' characters';
+            self::$error = App::lang()['error']['password-length']. PASSWORD_LENGTH.App::lang()['error']['characters'];
         }
         return self::$error;
     }
 
-    private static function checkIfEqualPassword($key, $password, $confirmPassword)
+    private static function checkIfEqualPassword($password, $confirmPassword)
     {
         if($password !== $confirmPassword) {
-            self::$error = ucfirst($key).' should be the same as password';
+            self::$error = App::lang()['error']['confirm_password_equal'];
         }
         return self::$error;
     }
@@ -51,10 +51,10 @@ class RegistrationValidation extends Validation
                 array_push(self::$errList, self::checkIfEmail($value));
             }
             if($key == 'password') {
-                array_push(self::$errList, self::checkPasswordLength($key, $value));
+                array_push(self::$errList, self::checkPasswordLength($value));
             }
             if($key == 'confirm-password') {
-                array_push(self::$errList, self::checkIfEqualPassword($key, $data['password'], $value));
+                array_push(self::$errList, self::checkIfEqualPassword($data['password'], $value));
             }
 
             $data[$key] = $value;

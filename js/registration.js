@@ -1,26 +1,26 @@
 document.addEventListener("DOMContentLoaded", function(event) {
     let rules = {
         'first-name': {
-            required: { required: true, error:'This field is required'},
+            required: { required: true, error: lang[locale]['required'] },
         },
 
         'last-name': {
-            required: { required: true, error:'This field is required'},
+            required: { required: true, error: lang[locale]['required'] },
         },
 
         'email': {
-            required: { required: true, error:'This field is required'},
-            email: { email: true, error:'Please enter valid email'},
+            required: { required: true, error: lang[locale]['required'] },
+            email: { email: true, error: lang[locale]['email-valid']},
         },
 
         'password' : {
-            required: { required: true, error:'This field is required'},
-            minLength: { minLength: 6, error:'Password should be at least 6 characters'},
+            required: { required: true, error: lang[locale]['required'] },
+            minLength: { minLength: 6, error: lang[locale]['password-length']},
         },
 
         'confirm-password' : {
-            required: { required: true, error:'This field is required'},
-            equal: { equal: true, error:'Please enter the same password as above'},
+            required: { required: true, error: lang[locale]['required'] },
+            equal: { equal: true, error: lang[locale]['confirm-password']},
         }
     };
 
@@ -81,7 +81,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         for(let i = 0; i < errorsArray.length; i++) {
             if(errorsArray[i].length == 0) {
-                handlerAjax();
+                let data = new FormData(document.querySelector('#user-registration'));
+                handlerAjax('POST','server/registration.php', data, displayResponseRegistrationUser);
                 return;
             }
         }
@@ -116,27 +117,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     }
 
-    function handlerAjax() {
-        var data = new FormData(document.querySelector('form'));
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'server/registration.php', true);
-        xhr.onload = function () {
-            if(xhr.status !== 200){
-                // Server does not return HTTP 200 (OK) response.
-                return;
-            }
-            let response = JSON.parse(this.response);
-            let elementMsgResponse = document.getElementById("msg-response");
-            if(!response.isSuccess) {
-                changeClassName( elementMsgResponse, "success", "error");
+    function displayResponseRegistrationUser(response) {
+        let elementMsgResponse = document.getElementById("msg-response");
+        if(!response.isSuccess) {
+            changeClassName( elementMsgResponse, "success", "error");
 
-            } else {
-                changeClassName( elementMsgResponse, "error", "success");
-            }
+        } else {
+            changeClassName( elementMsgResponse, "error", "success");
+        }
 
-            elementMsgResponse.innerHTML = response.message;
-        };
-        xhr.send(data);
+        elementMsgResponse.innerHTML = response.message;
     }
 
     function changeClassName(el, className1, className2) {

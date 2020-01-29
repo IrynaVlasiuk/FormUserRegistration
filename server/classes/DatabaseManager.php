@@ -21,15 +21,15 @@ class DatabaseManager
             $emailExist = self::checkEmailUnique($user->getEmail());
             if($emailExist) {
                 $responseAjax->isSuccess = false;
-                $responseAjax->message = "A user with the same email already exists";
+                $responseAjax->message = App::lang()['error']['email_exists'];
             } else {
                 $mysqlQuery = self::saveUser($user->getFirstName(), $user->getLastName(), $user->getEmail(), $user->getPassword(), $fileName);
                 if(!$mysqlQuery) {
                     $responseAjax->isSuccess = true;
-                    array_push($responseAjax->message, "You are successfully registered");
+                    array_push($responseAjax->message, App::lang()['info_msg']['success-reg']);
                 } else {
                     $responseAjax->isSuccess = false;
-                    array_push($responseAjax->message, "Database error. Please try again");
+                    array_push($responseAjax->message, App::lang()['error']['db']);
                 }
             }
 

@@ -17,11 +17,11 @@ class FileManager {
                 $response->data = $file;
             } else {
                 $response->isSuccess = false;
-                $response->data = "Sorry, there was an error uploading your file";
+                $response->data = App::lang()['error']['file-upload'];
             }
         } else {
             $response->isSuccess = false;
-            $response->data = "Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload";
+            $response->data = App::lang()['error']['type-file'];
         }
 
         return $response;
